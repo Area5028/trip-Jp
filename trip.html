@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>2026.10 越南 & 日本自驾行程单</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --card: #ffffff;
+      --text: #1d1d1f;
+      --subtext: #6e6e73;
+      --primary: #0066cc;
+      --success: #1d8348;
+      --success-bg: #e8f8f5;
+      --warn: #b9770e;
+      --warn-bg: #fef9e7;
+      --danger: #c0392b;
+      --danger-bg: #fdedec;
+      --purple: #6c3483;
+      --purple-bg: #f5eef8;
+      --border: #e5e5ea;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+    header {
+      background: #1d1d1f;
+      color: #fff;
+      padding: 18px 16px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    header h1 { font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+    header p { font-size: 12px; color: #a1a1a6; }
+    .nav-tabs {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 62px;
+      z-index: 99;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 0 0 auto;
+      padding: 6px 13px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: #f5f5f7;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .container { max-width: 680px; margin: 0 auto; padding: 12px 16px; }
+    .day-section { margin-bottom: 24px; }
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 0 4px;
+    }
+    .day-title { font-size: 16px; font-weight: 700; color: var(--text); }
+    .day-city {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 12px;
+      background: #e5e5ea;
+      color: #3a3a3c;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .card.highlight-card {
+      border-left: 4px solid var(--danger);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+    .time-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .badge-ok { background: var(--success-bg); color: var(--success); }
+    .badge-warn { background: var(--warn-bg); color: var(--warn); }
+    .badge-important { background: var(--danger-bg); color: var(--danger); }
+    .badge-spot { background: var(--purple-bg); color: var(--purple); }
+    .item-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .meta-row {
+      font-size: 13px;
+      color: var(--subtext);
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+    .tip-box {
+      background: #f8f9fa;
+      border-left: 3px solid var(--primary);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #333;
+      margin: 8px 0;
+    }
+    .code-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0f4f8;
+      color: #1a252f;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin: 4px 4px 4px 0;
+      cursor: pointer;
+      border: 1px dashed #b0c4de;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #f0f0f2;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      flex: 1 1 auto;
+      text-align: center;
+    }
+    .btn-map { background: var(--primary); color: #fff; }
+    .btn-copy { background: #f2f2f7; color: var(--text); border: 1px solid var(--border); }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(29,29,31,0.92);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+      z-index: 999;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>2026.10 越南 & 日本自驾行程单</h1>
+  <p>10月17日 – 10月27日 · 点击单号或地址可直接复制 / 调起导航</p>
+</header>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="filterDay('all', this)">全部</button>
+  <button class="tab-btn" onclick="filterDay('d17', this)">10/17-18 胡志明</button>
+  <button class="tab-btn" onclick="filterDay('d19', this)">10/19 抵日·大矶</button>
+  <button class="tab-btn" onclick="filterDay('d20', this)">10/20 静冈·名古屋</button>
+  <button class="tab-btn" onclick="filterDay('d21', this)">10/21 名古屋</button>
+  <button class="tab-btn" onclick="filterDay('d22', this)">10/22 马笼宿·返东京</button>
+  <button class="tab-btn" onclick="filterDay('d23', this)">10/23 东京(PPY)</button>
+  <button class="tab-btn" onclick="filterDay('d24', this)">10/24 东京购物</button>
+  <button class="tab-btn" onclick="filterDay('d25', this)">10/25-27 离日&返程</button>
+</div>
+
+<div class="container">
+
+  <!-- 10/17 - 10/18 -->
+  <div class="day-section" data-group="d17">
+    <div class="day-header">
+      <span class="day-title">10月17日 (周六) – 10月18日 (周日)</span>
+      <span class="day-city">新加坡 → 胡志明市 (GMT+7)</span>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10/17 13:10 (SGT) → 14:25 (ICT)</span>
+        <span class="badge badge-ok">已确认</span>
+      </div>
+      <div class="item-title">✈️ 越南航空 VN 650 (SIN → SGN) + VIP 快速通关</div>
+      <div class="meta-row">新山一机场落地后寻找举牌接待人员（2位非越南籍旅客）。出发前请完成线上入境申报。</div>
+      <div>
+        <span class="code-box" onclick="copyText('KZE726299')">📋 VIP通关编号: KZE726299</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10/17 入住 – 10/18 退房</span>
+        <span class="badge badge-ok">已确认 · 1晚</span>
+      </div>
+      <div class="item-title">🏨 Đô Thành Residence by DDH (Elite 两居室)</div>
+      <div class="meta-row">地址：Số 18, Đường số 3, Cư Xá Đô Thành, Phường 4, Quận 3, TP. Hồ Chí Minh</div>
+      <div class="tip-box">
+        📌 <b>行李与退房安排</b>：10月18日退房后将行李寄存于公寓（18日晚无住宿）；<b>10月19日凌晨 02:00</b> 返回公寓取行李后直接前往胡志明机场。
+      </div>
+      <div>
+        <span class="code-box" onclick="copyText('1359048238541012')">📋 确认号: 1359048238541012</span>
+        <span class="code-box" onclick="copyText('3696')">🔑 PIN: 3696</span>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=So+18+Duong+so+3+Cu+Xa+Do+Thanh+Quan+3+Ho+Chi+Minh" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('Số 18, Đường số 3, Cư Xá Đô Thành, Phường 4, Quận 3, TP. Hồ Chí Minh')">复制地址 (Grab用)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10/19 -->
+  <div class="day-section" data-group="d19">
+    <div class="day-header">
+      <span class="day-title">10月19日 (周一)</span>
+      <span class="day-city">胡志明 → 东京成田 → 筑地 → 大矶 (GMT+9)</span>
+    </div>
+
+    <div class="card highlight-card">
+      <div class="card-top">
+        <span class="time-tag">02:00 (ICT) 凌晨</span>
+        <span class="badge badge-important">重要节点</span>
+      </div>
+      <div class="item-title">🧳 返回 Đô Thành Residence 取行李 → 前往新山一机场 (SGN)</div>
+      <div class="meta-row">
+        取完行李后直接前往新山一国际机场国际航站楼（T2），办理 07:00 起飞的全日空 NH 834 值机。<br>
+        • <b>公寓地址</b>：Số 18, Đường số 3, Cư Xá Đô Thành, Phường 4, Quận 3, TP. Hồ Chí Minh<br>
+        • <b>机场地址</b>：Ga Quốc Tế - Sân bay Tân Sơn Nhất, Trường Sơn, Phường 2, Tân Bình, TP. Hồ Chí Minh
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-copy" onclick="copyText('Số 18, Đường số 3, Cư Xá Đô Thành, Phường 4, Quận 3, TP. Hồ Chí Minh')">📋 复制公寓地址</button>
+        <button class="btn btn-copy" onclick="copyText('Ga Quốc Tế - Sân bay Tân Sơn Nhất, Trường Sơn, Phường 2, Tân Bình, TP. Hồ Chí Minh')">📋 复制机场地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">07:00 (ICT) → 15:10 (JST)</span>
+        <span class="badge badge-ok">已确认 · 商务舱</span>
+      </div>
+      <div class="item-title">✈️ 全日空 NH 834 (胡志明 SGN → 东京成田 NRT)</div>
+      <div class="meta-row">抵达东京成田国际机场，通关后前往租车门店提车。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">16:30 (JST)</span>
+        <span class="badge badge-ok">已确认</span>
+      </div>
+      <div class="item-title">🚗 提车：Tbc Rent A Car 成田机场店 (BMW 3系 Touring)</div>
+      <div class="meta-row">地址：千葉県成田市駒井野469-1 (469-1 Komaino, Narita, Chiba 286-0121)</div>
+      <div>
+        <span class="code-box" onclick="copyText('1359048189310001')">📋 预订号: 1359048189310001</span>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=469-1+Komaino+Narita+Chiba+286-0121" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('千葉県成田市駒井野469-1')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">18:30 (JST)</span>
+        <span class="badge badge-ok">已改期确认 · 2位</span>
+      </div>
+      <div class="item-title">🐟 晚餐：炭火原始焼きと蔵元焼酎の店 のどぐろの中俣 築地</div>
+      <div class="meta-row">已从21日改至19日晚 18:30（限时2.5小时）。<br>地址：東京都中央区築地2-15-15 セントラル東銀座 1F</div>
+      <div>
+        <span class="code-box" onclick="copyText('X8ER752GQD')">📋 确认号: X8ER752GQD</span>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=東京都中央区築地2-15-15" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都中央区築地2-15-15 セントラル東銀座 1F')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">晚间入住 (24:00前)</span>
+        <span class="badge badge-ok">已换新预订</span>
+      </div>
+      <div class="item-title">🏨 入住：大矶王子大饭店 (Oiso Prince Hotel)</div>
+      <div class="meta-row">次日 10:00 前退房。地址：神奈川県中郡大磯町国府本郷546</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Oiso+Prince+Hotel+神奈川県中郡大磯町国府本郷546" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('神奈川県中郡大磯町国府本郷546')">复制日文地址</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10/20 -->
+  <div class="day-section" data-group="d20">
+    <div class="day-header">
+      <span class="day-title">10月20日 (周二)</span>
+      <span class="day-city">大矶 → 静冈清水 → 名古屋 (GMT+9)</span>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">中午 (自驾中途歇脚)</span>
+        <span class="badge badge-spot">午餐中停</span>
+      </div>
+      <div class="item-title">🍣 清水鱼市场 河岸之市 (Kashi-no-Ichi Market / 清水魚市場 河岸の市)</div>
+      <div class="meta-row">地址：〒424-0823 静岡県静岡市清水区島崎町149</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=清水魚市場+河岸の市+静岡県静岡市清水区島崎町149" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('静岡県静岡市清水区島崎町149')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">餐后 (下午茶/观景)</span>
+        <span class="badge badge-spot">咖啡歇脚</span>
+      </div>
+      <div class="item-title">☕ 日本平梦露台 (Nihondaira Yume Terrace / 日本平夢テラス)</div>
+      <div class="meta-row">地址：600-1, Kusanagi, Shimizu, Shizuoka, Japan (〒424-0886 静岡県静岡市清水区草薙600-1)</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=日本平夢テラス+600-1+Kusanagi+Shimizu+Shizuoka" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('静岡県静岡市清水区草薙600-1')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">下午入住 (连住2晚)</span>
+        <span class="badge badge-ok">已确认</span>
+      </div>
+      <div class="item-title">🏨 入住：名古屋希尔顿酒店 (Hilton Nagoya)</div>
+      <div class="meta-row">入住 2 晚（10/20 – 10/22）。地址：愛知県名古屋市中区栄1-3-3</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Hilton+Nagoya+愛知県名古屋市中区栄1-3-3" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('愛知県名古屋市中区栄1-3-3')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">18:00 (JST)</span>
+        <span class="badge badge-ok">已确认</span>
+      </div>
+      <div class="item-title">🥩 晚餐：飛騨牛一頭家 馬喰一代 名古屋WEST</div>
+      <div class="meta-row">地址：愛知県名古屋市西区牛島町6-24 アクロスキューブ名古屋 2F</div>
+      <div>
+        <span class="code-box" onclick="copyText('9AB8-158E-9B33-5D98')">📋 确认号: 9AB8-158E-9B33-5D98</span>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=飛騨牛一頭家+馬喰一代+名古屋WEST" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('愛知県名古屋市西区牛島町6-24 アクロスキューブ名古屋 2F')">复制日文地址</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10/21 -->
+  <div class="day-section" data-group="d21">
+    <div class="day-header">
+      <span class="day-title">10月21日 (周三)</span>
+      <span class="day-city">名古屋深度游 (GMT+9)</span>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">上午</span>
+        <span class="badge badge-spot">景点游览</span>
+      </div>
+      <div class="item-title">🏛️ 丰田产业技术纪念馆 (西区则武新町)</div>
+      <div class="meta-row">地址：愛知県名古屋市西区則武新町4-1-35</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=トヨタ産業技術記念館+愛知県名古屋市西区則武新町4-1-35" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('愛知県名古屋市西区則武新町4-1-35')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">12:00 (JST)</span>
+        <span class="badge badge-ok">已确认</span>
+      </div>
+      <div class="item-title">🍱 午餐：炭焼うな富士 白壁別邸 (鳗鱼饭)</div>
+      <div class="meta-row">地址：愛知県名古屋市東区芳野1-10-21</div>
+      <div>
+        <span class="code-box" onclick="copyText('6UJYASFLYU')">📋 确认号: 6UJYASFLYU</span>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=炭焼うな富士+白壁別邸" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('愛知県名古屋市東区芳野1-10-21')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">下午 (午餐后)</span>
+        <span class="badge badge-spot">主题乐园</span>
+      </div>
+      <div class="item-title">🌲 吉卜力公园 (Ghibli Park / ジブリパーク)</div>
+      <div class="meta-row">地址：〒480-1342 愛知県長久手市茨ケ廻間乙1533-1 (愛・地球博記念公園内)</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=ジブリパーク+愛知県長久手市茨ケ廻間乙1533-1" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('愛知県長久手市茨ケ廻間乙1533-1')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">晚上</span>
+        <span class="badge badge-ok">晚餐安排</span>
+      </div>
+      <div class="item-title">串 晚餐：Yakitori Senkame 烧鸟 (やきとり 千亀)</div>
+      <div class="meta-row">地址：Japan, 〒460-0008 Aichi, Nagoya, Naka Ward, Sakae, 3 Chome−1−19 ソフランビル ２F (愛知県名古屋市中区栄3-1-19 ソフランビル 2F)</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=やきとり千亀+愛知県名古屋市中区栄3-1-19" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('愛知県名古屋市中区栄3-1-19 ソフランビル 2F')">复制日文地址</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10/22 -->
+  <div class="day-section" data-group="d22">
+    <div class="day-header">
+      <span class="day-title">10月22日 (周四)</span>
+      <span class="day-city">名古屋 → 马笼宿 → 东京银座 & 六本木 (GMT+9)</span>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">上午 – 下午</span>
+        <span class="badge badge-spot">自驾途经</span>
+      </div>
+      <div class="item-title">🏘️ 经中央自动车道游览：马笼宿 (Magome-juku)</div>
+      <div class="meta-row">地址：岐阜県中津川市馬籠4300-1（马笼宿停车场）</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=馬籠宿+岐阜県中津川市馬籠" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('岐阜県中津川市馬籠4300-1')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card highlight-card">
+      <div class="card-top">
+        <span class="time-tag">16:30 (JST) 前</span>
+        <span class="badge badge-important">满油还车</span>
+      </div>
+      <div class="item-title">⛽ 加油 & 还车：Tbc Rent A Car 东京本所（浅草）店</div>
+      <div class="meta-row">
+        • <b>还车门店地址</b>：〒130-0004 東京都墨田区本所2-10-5 稲葉ビル<br>
+        • <b>建议路线</b>：可先开到银座酒店卸下大件行李，再前往墨田区本所加油并还车；或直接还车后乘地铁前往银座。
+      </div>
+      <div class="tip-box">
+        ⛽ <b>还车点旁指定满油加油站（距离门店仅 150–200 米 / 车程 1 分钟）</b>：<br>
+        1. <b>首选：ENEOS 本所 SS (Eneos Honjo Service Station)</b><br>
+        地址：〒130-0004 東京都墨田区本所3-2-1（营业时间 07:30–19:00，距门店 150 米）<br>
+        2. <b>备选：ENEOS Wing 厩橋 SS (Umayabashi Station)</b><br>
+        地址：〒130-0004 東京都墨田区本所1-24-10（营业时间 08:00–20:00，距门店 200 米）<br>
+        ⚠️ <b>注意</b>：请留意车辆油品要求（宝马汽油版通常为高标号 <b>ハイオク</b>，柴油版为 <b>軽油</b>），加满后务必<b>保留加油小票（レシート）</b>在还车时出示。
+      </div>
+      <div>
+        <span class="code-box" onclick="copyText('1359048189310001')">📋 租车预订号: 1359048189310001</span>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Eneos+Honjo+Service+Station+東京都墨田区本所3-2-1" target="_blank">⛽ 导航至加油站 (ENEOS本所)</a>
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=東京都墨田区本所2-10-5" target="_blank">📍 导航至还车门店</a>
+        <button class="btn btn-copy" onclick="copyText('東京都墨田区本所3-2-1')">复制加油站地址</button>
+        <button class="btn btn-copy" onclick="copyText('東京都墨田区本所2-10-5')">复制还车店地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">下午入住 (连住3晚)</span>
+        <span class="badge badge-ok">3晚已全部确认</span>
+      </div>
+      <div class="item-title">🏨 入住：东京银座凯悦尚萃酒店 (Hyatt Centric Ginza Tokyo)</div>
+      <div class="meta-row">连住 3 晚（10/22 入住 – 10/25 退房）。<br>酒店地址：〒104-0061 東京都中央区銀座6-6-7</div>
+      <div>
+        <span class="code-box" onclick="copyText('40023B28381851')">📋 10/22-23: 40023B28381851</span>
+        <span class="code-box" onclick="copyText('40023B28381884')">📋 10/23-24: 40023B28381884</span>
+        <span class="code-box" onclick="copyText('40023B28382071')">📋 10/24-25: 40023B28382071</span>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Hyatt+Centric+Ginza+Tokyo+東京都中央区銀座6-6-7" target="_blank">📍 导航至银座凯悦尚萃</a>
+        <button class="btn btn-copy" onclick="copyText('東京都中央区銀座6-6-7')">复制酒店地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">19:00 (JST)</span>
+        <span class="badge badge-ok">已确认 (其他账户)</span>
+      </div>
+      <div class="item-title">🔥 晚餐：焼うお いしかわ 六本木 凛華楼</div>
+      <div class="meta-row">已用其他账户成功预订 19:00。<br>地址：東京都港区六本木6-2-31 六本木ヒルズノースタワー B1F</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=焼うおいしかわ+六本木凛華楼" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都港区六本木6-2-31 六本木ヒルズノースタワー B1F')">复制日文地址</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10/23 -->
+  <div class="day-section" data-group="d23">
+    <div class="day-header">
+      <span class="day-title">10月23日 (周五)</span>
+      <span class="day-city">丰洲 → 日暮里 (PPY) → 浅草夜景 → 东上野</span>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">上午</span>
+        <span class="badge badge-spot">市场游览</span>
+      </div>
+      <div class="item-title">🍣 丰洲市场 (Toyosu Market)</div>
+      <div class="meta-row">地址：東京都江東区豊洲6-6-1</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=豊洲市場+東京都江東区豊洲6-6-1" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都江東区豊洲6-6-1')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card highlight-card">
+      <div class="card-top">
+        <span class="time-tag">13:50 – 15:50 (JST)</span>
+        <span class="badge badge-important">必达事件</span>
+      </div>
+      <div class="item-title">📌 PPY（日暮里车站 Nippori Station）</div>
+      <div class="meta-row">⚠️ <b>必须在 13:50 (1:50 PM) 前到达日暮里车站</b>，活动持续至 15:50 (3:50 PM) 结束。<br>地址：東京都荒川区西日暮里2-19 (JR日暮里駅)</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=日暮里駅+東京都荒川区西日暮里2-19" target="_blank">📍 导航至日暮里站</a>
+        <button class="btn btn-copy" onclick="copyText('日暮里駅')">复制站名</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">15:50 之后 (下午 – 傍晚)</span>
+        <span class="badge badge-spot">漫步 & 夜景</span>
+      </div>
+      <div class="item-title">☕ 奥浅草复古喫茶 → 🏮 浅草寺傍晚点灯夜景</div>
+      <div class="meta-row">PPY结束后前往奥浅草体验复古昭和喫茶店，傍晚欣赏浅草寺五重塔与宝藏门点灯夜景。<br>浅草寺地址：東京都台東区浅草2-3-1</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=浅草寺+東京都台東区浅草2-3-1" target="_blank">📍 导航至浅草寺</a>
+        <button class="btn btn-copy" onclick="copyText('東京都台東区浅草2-3-1')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">晚上</span>
+        <span class="badge badge-ok">晚餐安排</span>
+      </div>
+      <div class="item-title">串 晚餐：Torisei (鳥せい)</div>
+      <div class="meta-row">地址：3 Chome-17-3 Higashiueno, Taito City, Tokyo 110-0015, Japan (〒110-0015 東京都台東区東上野3-17-3)</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=鳥せい+東京都台東区東上野3-17-3" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都台東区東上野3-17-3')">复制日文地址</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10/24 -->
+  <div class="day-section" data-group="d24">
+    <div class="day-header">
+      <span class="day-title">10月24日 (周六)</span>
+      <span class="day-city">涩谷 → 原宿·表参道·南青山 → 八重洲 → 新宿</span>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10:45 – 12:00</span>
+        <span class="badge badge-ok">早午餐</span>
+      </div>
+      <div class="item-title">🍳 蛋包饭 @ ESPRESSO D' WORKS yellow</div>
+      <div class="meta-row">地址：〒150-0042 東京都渋谷区宇田川町26-5 育真ビル B1F</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=ESPRESSO+D+WORKS+yellow+東京都渋谷区宇田川町26-5" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都渋谷区宇田川町26-5 育真ビル B1F')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">12:00 – 12:45</span>
+        <span class="badge badge-spot">购物 1</span>
+      </div>
+      <div class="item-title">🧥 BEAMS F 东京原宿</div>
+      <div class="meta-row">地址：〒150-0001 東京都渋谷区神宮前3-25-15 ダヴィンチ原宿</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=BEAMS+F+東京都渋谷区神宮前3-25-15" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都渋谷区神宮前3-25-15')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">12:45 – 14:00</span>
+        <span class="badge badge-spot">购物 2</span>
+      </div>
+      <div class="item-title">👓 白山眼鏡店 表参道 (WALLS)</div>
+      <div class="meta-row">地址：〒150-0001 東京都渋谷区神宮前5-7-18 プラザ青山 1F</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=白山眼鏡店+WALLS+東京都渋谷区神宮前5-7-18" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都渋谷区神宮前5-7-18 プラザ青山 1F')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">14:00 – 15:00</span>
+        <span class="badge badge-spot">购物 3</span>
+      </div>
+      <div class="item-title">🛍️ H BEAUTY&YOUTH 南青山</div>
+      <div class="meta-row">地址：〒107-0062 東京都港区南青山3-14-17</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=H+BEAUTY%26YOUTH+東京都港区南青山3-14-17" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都港区南青山3-14-17')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">15:00 – 16:55</span>
+        <span class="badge badge-spot">新地标探索</span>
+      </div>
+      <div class="item-title">🏙️ TOFROM YAESU TOWER</div>
+      <div class="meta-row">地址：〒103-0028 東京都中央区八重洲1-6-1（东京站八重洲口直连）</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=TOFROM+YAESU+東京都中央区八重洲1-6-1" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都中央区八重洲1-6-1')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">17:45 – 18:30</span>
+        <span class="badge badge-spot">交通移动</span>
+      </div>
+      <div class="item-title">🚇 前往新宿 (Shinjuku)</div>
+      <div class="meta-row">从东京/银座搭乘丸之内线或JR中央线前往新宿西口。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">18:30 – 20:30</span>
+        <span class="badge badge-ok">晚餐安排</span>
+      </div>
+      <div class="item-title">🔥 晚餐：robatasho (ろばた 翔)</div>
+      <div class="meta-row">地址：〒160-0023 東京都新宿区西新宿1-4-11 宝ビル B1F（新宿西口站步行2分钟）</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=ろばた翔+東京都新宿区西新宿1-4-11" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都新宿区西新宿1-4-11 宝ビル B1F')">复制日文地址</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10/25 - 10/27 -->
+  <div class="day-section" data-group="d25">
+    <div class="day-header">
+      <span class="day-title">10月25日 (周日) – 10月27日 (周二)</span>
+      <span class="day-city">表参道·南青山 → 羽田离境 → 胡志明 → 新加坡</span>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10/25 中午</span>
+        <span class="badge badge-ok">离境前午餐</span>
+      </div>
+      <div class="item-title">🐷 午餐：とんかつ まい泉 青山本店 (迈泉炸猪排)</div>
+      <div class="meta-row">地址：4 Chome-8-5 Jingumae, Shibuya, Tokyo 150-0001, Japan (〒150-0001 東京都渋谷区神宮前4-8-5)</div>
+      <div class="tip-box">
+        🥪 <b>顺路必买</b>：在迈泉门口外卖窗口带两盒经典的<b>迷你炸猪排三明治（ヒレかつサンド）</b>当做机上点心。
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=とんかつまい泉+青山本店+東京都渋谷区神宮前4-8-5" target="_blank">📍 Google Maps 导航</a>
+        <button class="btn btn-copy" onclick="copyText('東京都渋谷区神宮前4-8-5')">复制日文地址</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10/25 餐后 – 13:30</span>
+        <span class="badge badge-spot">甜点 & 漫步</span>
+      </div>
+      <div class="item-title">🍰 漫步表参道·南青山 → 13:30 乘银座线直回银座</div>
+      <div class="meta-row">
+        走出迈泉就是神宫前/表参道的背街小巷，沿途环境极为舒适：<br>
+        1. <b>Pierre Hermé Paris Aoyama</b>（步行5分钟，挑选顶级马卡龙）：東京都渋谷区神宮前5-51-8<br>
+        2. <b>SunnyHills 微热山丘 南青山店</b>（隈研吾木构建筑，歇脚喝杯赠饮台湾乌龙茶）：東京都港区南青山3-10-20
+      </div>
+      <div class="tip-box">
+        🚇 <b>13:30 返程拿行李</b>：在<b>表参道站 (Omotesando)</b> 搭乘东京メトロ<b>银座线 (Ginza Line)</b>，<b>13分钟直达银座站</b>回凯悦尚萃酒店提取行李赴机场。
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Pierre+Herme+Paris+Aoyama+東京都渋谷区神宮前5-51-8" target="_blank">📍 Pierre Hermé</a>
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=SunnyHills+Minami+Aoyama+東京都港区南青山3-10-20" target="_blank">📍 微热山丘</a>
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=表参道駅" target="_blank">📍 表参道站</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10/25 17:15 (JST)</span>
+        <span class="badge badge-ok">已确认</span>
+      </div>
+      <div class="item-title">✈️ 全日空 NH 891 (东京羽田 HND → 胡志明市 SGN)</div>
+      <div class="meta-row">羽田机场第3航站楼（Terminal 3）起飞。</div>
+      <div class="btn-group">
+        <a class="btn btn-map" href="https://www.google.com/maps/search/?api=1&query=Haneda+Airport+Terminal+3" target="_blank">📍 导航至羽田 T3</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10/25 – 10/27 (2晚)</span>
+        <span class="badge badge-warn">待预订</span>
+      </div>
+      <div class="item-title">🏨 胡志明市住宿（10月25日 & 10月26日 两晚）</div>
+      <div class="meta-row">目前暂未预订，确定酒店后可随时补充。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="time-tag">10/27 16:20 (ICT)</span>
+        <span class="badge badge-ok">已确认</span>
+      </div>
+      <div class="item-title">✈️ 返程航班 (胡志明市 SGN → 新加坡 SIN)</div>
+      <div class="meta-row">新山一国际机场起飞返回新加坡。</div>
+      <div>
+        <span class="code-box" onclick="copyText('1359048682606072')">📋 预订号: 1359048682606072</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">已复制到剪贴板</div>
+
+<script>
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('已复制：' + text);
+      }).catch(() => fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showToast('已复制：' + text);
+    } catch (e) {
+      showToast('复制失败，请长按文字复制');
+    }
+    document.body.removeChild(ta);
+  }
+
+  function filterDay(group, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const sections = document.querySelectorAll('.day-section');
+    if (group === 'all') {
+      sections.forEach(s => s.style.display = 'block');
+    } else {
+      sections.forEach(s => {
+        s.style.display = (s.getAttribute('data-group') === group) ? 'block' : 'none';
+      });
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
